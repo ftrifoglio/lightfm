@@ -159,9 +159,12 @@ def read_version():
     return mod["__version__"]
 
 
-use_openmp = not sys.platform.startswith("darwin") and not sys.platform.startswith(
-    "win"
-)
+if os.environ.get("LIGHTFM_ENABLE_OPENMP"):
+    use_openmp = True
+else:
+    use_openmp = not sys.platform.startswith("darwin") and not sys.platform.startswith(
+        "win"
+    )
 
 long_description = pathlib.Path(__file__).parent.joinpath("README.md").read_text()
 
